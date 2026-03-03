@@ -29,7 +29,7 @@ public class AddScrapedOfferService implements AddScrapedOfferUseCase {
                 .skills(command.skills())
                 .isRemote(command.isRemote())
                 .createdAt(command.createdAt())
-                .validTo(command.createdAt())
+                .validTo(command.validTo())
                 .originalId(command.originalId())
                 .experienceLevel(experienceLevel)
                 .sourcePlatform(sourcePlatform)

@@ -36,6 +36,14 @@ public class JobOfferPersistenceAdapter implements JobOfferRepositoryPort {
                 .currency(salary != null ? salary.currency() : null)
                 .paymentSchedule(salary != null ? salary.paymentSchedule() : null)
 
+                .isRemote(jo.isRemote())
+                .createdAt(jo.getCreatedAt())
+                .validTo(jo.getValidTo())
+                .originalId(jo.getOriginalId())
+
+                // skills
+                .skills(jo.getSkills())
+
                 // Translating Enums to safe strings
                 .experienceLevel(jo.getExperienceLevel() != null ? jo.getExperienceLevel().name() : null)
                 .sourcePlatform(jo.getSourcePlatform() != null ? jo.getSourcePlatform().name() : null)
