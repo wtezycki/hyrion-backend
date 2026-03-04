@@ -34,7 +34,9 @@ public class JobOfferEntity {
 
     // Relationship 1:N for list of skills
     // job_offer_skills
-    @ElementCollection(fetch = FetchType.EAGER)
+    // LAZY fetch type:
+    // in application.properties configurated Hibernate fetching for skills
+    @ElementCollection
     @CollectionTable(
             name = "job_offer_skills",
             joinColumns = @JoinColumn(name = "job_offer_id"))

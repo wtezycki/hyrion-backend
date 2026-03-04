@@ -19,7 +19,7 @@ public interface JobOfferJpaRepository extends JpaRepository<JobOfferEntity, UUI
             "(:sourcePlatform IS NULL OR o.sourcePlatform = :sourcePlatform) AND " +
             "(:isRemote IS NULL OR o.isRemote = :isRemote) AND " +
             "(:minSalary IS NULL OR o.maxSalary >= :minSalary) AND " +
-            "(:skill IS NULL OR :skill MEMBER OF o.skills)") // Magia do przeszukiwania list!
+            "(:skill IS NULL OR :skill MEMBER OF o.skills)")
     Page<JobOfferEntity> findByFilters(
             @Param("location") String location,
             @Param("experienceLevel") String experienceLevel,

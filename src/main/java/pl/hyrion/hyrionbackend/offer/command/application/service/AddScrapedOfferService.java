@@ -7,6 +7,7 @@ import pl.hyrion.hyrionbackend.offer.command.domain.JobOffer;
 import pl.hyrion.hyrionbackend.offer.command.domain.Salary;
 import pl.hyrion.hyrionbackend.offer.command.domain.enums.ExperienceLevel;
 import pl.hyrion.hyrionbackend.offer.command.domain.enums.SourcePlatform;
+import pl.hyrion.hyrionbackend.offer.command.domain.exception.InvalidJobOfferException;
 
 @RequiredArgsConstructor
 public class AddScrapedOfferService implements AddScrapedOfferUseCase {
@@ -17,8 +18,8 @@ public class AddScrapedOfferService implements AddScrapedOfferUseCase {
     public void addOffer(AddOfferCommand command) {
         // Translating raw data to Value Objects and Enums
         Salary salary = createSalary(command);
-        ExperienceLevel experienceLevel = ExperienceLevel.valueOf(command.experienceLevel().toUpperCase());
-        SourcePlatform sourcePlatform = SourcePlatform.valueOf(command.sourcePlatform().toUpperCase());
+        ExperienceLevel experienceLevel = parseExperienceLevel(command.experienceLevel());
+        SourcePlatform sourcePlatform = parseSourcePlatform(command.sourcePlatform());
 
         // Create aggregate:
         JobOffer jobOffer = JobOffer.builder()
@@ -52,4 +53,29 @@ public class AddScrapedOfferService implements AddScrapedOfferUseCase {
                 command.paymentSchedule()
         );
     }
+
+    private ExperienceLevel parseExperienceLevel(String experienceLevel) {
+        if(experienceLevel == null || experienceLevel.isBlank()) {
+            return null;
+        }
+        try{
+            return ExperienceLevel.valueOf(experienceLevel.toUpperCase());
+        }
+        catch (InvalidJobOfferException e) {
+            return null;
+        }
+    }
+
+    private SourcePlatform parseSourcePlatform(String sourcePlatform) {
+        if(sourcePlatform == null || sourcePlatform.isBlank()) {
+            return null;
+        }
+        try{
+            return SourcePlatform.valueOf(sourcePlatform.toUpperCase());
+        }
+        catch (InvalidJobOfferException e) {
+            return null;
+        }
+    }
+
 }
