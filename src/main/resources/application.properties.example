@@ -1,14 +1,19 @@
 spring.application.name=hyrion-backend
 
 # H2 Database Configuration
-spring.datasource.url=jdbc:h2:mem:hyriondb
+spring.datasource.url=jdbc:h2:mem:testdb
 spring.datasource.driverClassName=org.h2.Driver
 spring.datasource.username=user
 spring.datasource.password=password
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
 
+# Spring JPA
 spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 
-spring.h2.console.enabled=true
-spring.h2.console.path=/h2-console
+# SWAGGER
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.api-docs.path=/v3/api-docs
+springdoc.swagger-ui.operationsSorter=alpha
