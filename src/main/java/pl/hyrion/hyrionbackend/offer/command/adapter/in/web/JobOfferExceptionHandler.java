@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pl.hyrion.hyrionbackend.offer.command.domain.exception.InvalidJobOfferException;
 import pl.hyrion.hyrionbackend.offer.command.domain.exception.InvalidSalaryException;
+import pl.hyrion.hyrionbackend.offer.command.domain.exception.OfferNotFoundException;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +21,11 @@ public class JobOfferExceptionHandler {
     @ExceptionHandler(InvalidSalaryException.class)
     public ResponseEntity<ErrorResponse> handleInvalidSalaryException(InvalidSalaryException e) {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
+    @ExceptionHandler(OfferNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleOfferNotFoundException(OfferNotFoundException e) {
+        return buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
     private ResponseEntity<ErrorResponse> buildErrorResponse(HttpStatus status, String message) {
