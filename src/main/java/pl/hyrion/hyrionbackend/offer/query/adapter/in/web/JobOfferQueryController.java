@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.hyrion.hyrionbackend.offer.query.application.service.JobOfferQueryService;
 import pl.hyrion.hyrionbackend.offer.query.model.JobOfferView;
+
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @RestController
@@ -20,9 +22,15 @@ public class JobOfferQueryController {
     public ResponseEntity<Page<JobOfferView>> getOffers(
             @RequestParam(required = false) String location,
             @RequestParam(required = false) String experienceLevel,
-            Pageable pageable
-    ) {
-        Page<JobOfferView> offers = queryService.getAllJobOffers(location, experienceLevel, pageable);
+            @RequestParam(required = false) String sourcePlatform,
+            @RequestParam(required = false) Boolean isRemote,
+            @RequestParam(required = false) BigDecimal minSalary,
+            @RequestParam(required = false) String skill,
+            Pageable pageable) {
+
+        Page<JobOfferView> offers = queryService.getAllJobOffers(
+                location, experienceLevel, sourcePlatform, isRemote, minSalary, skill, pageable);
+
         return ResponseEntity.ok(offers);
     }
 

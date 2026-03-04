@@ -8,6 +8,8 @@ import pl.hyrion.hyrionbackend.offer.command.adapter.out.persistence.JobOfferEnt
 import pl.hyrion.hyrionbackend.offer.command.adapter.out.persistence.JobOfferJpaRepository;
 import pl.hyrion.hyrionbackend.offer.query.model.JobOfferView;
 import pl.hyrion.hyrionbackend.offer.command.domain.exception.OfferNotFoundException;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,12 +19,15 @@ public class JobOfferQueryService {
 
     private final JobOfferJpaRepository repository;
 
-    public Page<JobOfferView> getAllJobOffers(String location, String experienceLevel, Pageable pageable) {
+    public Page<JobOfferView> getAllJobOffers(String location,
+                                              String experienceLevel,
+                                              String sourcePlatform,
+                                              Boolean isRemote,
+                                              BigDecimal minSalary,
+                                              String skill,
+                                              Pageable pageable) {
         Page<JobOfferEntity> entityPage = repository.findByFilters(
-                location,
-                experienceLevel,
-                pageable
-        );
+                location, experienceLevel, sourcePlatform, isRemote, minSalary, skill, pageable);
 
         return entityPage.map(this::mapToView);
     }
